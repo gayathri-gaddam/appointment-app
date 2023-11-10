@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .container {
+            width: 1400px;
+            height: 650px;
+        }
+
+        .app-color-blue-1 {
+            color: #346EE1;
+        }
+
+        .app-color-blue-3 {
+            color: #A0B4D6;
+        }
+
+        .app-color-black {
+            color: #3E4350;
+        }
+
+        .app-color-gray-1 {
+            color: #949AA7;
+        }
+
+        .app-color-red {
+            color: #949AA7;
+        }
+
+        .app-bg-blue-1 {
+            background: #346EE1;
+        }
+
+        .app-bg-blue-2 {
+            background: #F5F9FC;
+        }
+
+        .app-button-shadow {
+            box-shadow: 0px 5px 10px 0px rgb(145 167 210 / 25%);
+        }
+
+        .app-bg-blue-3 {
+            background: #4A7AE5;
+        }
+
+        .app-bg-blue-4 {
+            background: #518AEA;
+        }
+
+        .app-bg-white-1 {
+            background: #F4F8F9;
+        }
+
+        .app-color-yellow-1 {
+            color: #D7AC67;
+        }
+
+        .app-bg-yellow-2 {
+            background: #FFF9EB;
+        }
+
+        .app-bg-yellow-3 {
+            background: #FFBE4E;
+        }
+
+        .app-border-1 {
+            border: 1px solid #F4F6F9;
+        }
+
+        .app-color-red-1 {
+            color: #E0899C;
+        }
+
+        .app-bg-red-2 {
+            background: #FEF5F6;
+        }
+
+        .app-color-green {
+            color: #0CBDA8;
+        }
+
+        .active {
+            position: relative;
+            box-shadow: 6px -6px 11px 0 rgb(0 0 0 / 8%);
+        }
+
+        .active::before {
+            position: absolute;
+            content: '';
+            width: 4px;
+            height: 55%;
+            background-color: #346EE1;
+            top: 20px;
+            left: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            /* Light gray background */
+            margin: 0;
+            padding: 0;
+            color: #333;
+            /* Dark text color */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            color: #1a73e8;
+            /* Blue title color */
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .icon {
+            margin-right: 30px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 70%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #addButton {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #addButton button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #1a73e8;
+            /* Blue button background */
+            color: #fff;
+            /* White button text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #addButton button:hover {
+            background-color: #10509e;
+            /* Darker blue on hover */
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-content input {
+            width: calc(100% - 40px);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .modal-content button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            /* Green button background */
+            color: #fff;
+            /* White button text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content button:hover {
+            background-color: #388e3c;
+            /* Darker green on hover */
+        }
+
+        .modal-content span {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        #appointments {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            align-items: center;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            /* background-color: #f9f9f9; */
+            gap :1rem
+        }
+        .appointment-details{
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            align-items: center;
+            padding: 10px;
+            /* border: 1px solid black; */
+            border-radius: 5px;
+            /* background-color: #f9f9f9; */
+        }
+
+        .edit-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .delete-button{
+            background-color: red;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 2px;
+        }
+
+        .edit-button:hover,
+        .delete-button:hover {
+            background-color: #0056b3;
+            /* Hover color */
+        }
+
+        .subheading {
+            font-weight: bold;
+        }
+        .first-name{
+            display: flex;
+            gap: 5px;
+            font-weight: 500;
+        }
+        .place{
+            margin-left: -4.5rem;
+        }
+        .location{
+            margin-left: -10rem;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment App | theuicode.com</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+        integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body class="bg-gray-200 flex justify-center items-center h-screen w-screen">
+    <!-- <h1>Appointments</h1> -->
+    <div class="container overflow-hidden rounded-2xl">
+        <div class="flex flex-row bg-white items-center">
+            <div class="app-bg-blue-1 px-10 py-5">
+                <span class="text-lg text-white font-bold">LOGO</span>
+            </div>
+            <div class="flex flex-row pl-5 items-center">
+                <div class="h-9 w-9 bg-yellow-400 border-solid border-4 border-blue-600 rounded-xl"></div>
+                <div class="flex flex-col pl-5">
+                    <span class="font-semibold text-sm app-color-black">Nishant Kamat</span>
+                    <span class="font-semibold text-xs app-color-gray-1">Cardio Trainer</span>
+                </div>
+                <svg class="w-4 h-4 app-color-blue-3 ml-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+                <div class="w-px bg-gray-100 h-10 ml-5"></div>
+            </div>
+            <div class="flex flex-row pl-5 items-center mr-auto">
+                <div class="h-9 w-9 app-bg-blue-2 flex justify-center items-center rounded-xl">
+                    <svg class="w-6 h-6 app-color-blue-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="flex flex-col pl-5">
+                    <span class="font-semibold text-sm app-color-black">Today</span>
+                    <span class="font-semibold text-sm app-color-blue-1">2 AUG 2018</span>
+                </div>
+                <svg class="h-4 w-4 app-color-blue-3 ml-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+                <div class="w-px bg-gray-100 h-10 ml-5"></div>
+
+            </div>
+            <button class="app-color-blue-1 font-semibold text-md app-button-shadow w-40 py-2 rounded-3xl mr-5">Show
+                All</button>
+            <button onclick="openModal()"><i class="fas fa-plus fa-2x icon"></i></button>
+
+
+        </div>
+        <div class="flex flex-col app-bg-white-1 px-12 pb-10">
+            <div class=" bg-white p-10">
+                <table class="w-full" >
+                    <thead>
+                        
+                    </thead>
+                    <tbody>
+                        <tr class="">
+                            <td>
+                                <div class="appointment-details">
+                                    <div class="subheading">Client</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="appointment-details">
+                                    <div class="subheading">Place</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="appointment-details">
+                                    <div class="subheading w-100">Date and Time</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="appointment-details">
+                                    <div class="subheading">Actions</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>
+                                
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="appointments">
+
+                </div>
+
+                <!-- <div id="addButton">
+        <button onclick="openModal()">Add Appointment</button>
+    </div> -->
+
+                <div class="modal" id="myModal">
+                    <div class="modal-content">
+                        <span onclick="closeModal()" style="float: right; cursor: pointer;" size="20">&times;</span>
+                        <h2>Appointments Details</h2>
+                        <input type="text" id="firstName" placeholder="First Name">
+                        <input type="text" id="lastName" placeholder="Last Name">
+                        <input type="text" id="place" placeholder="Place">
+                        <input type="datetime-local" id="dateAndTime" placeholder="Date & Time">
+                        <button onclick="addAppointment()" style="margin-left: 4rem;">confrim</button>
+                    </div>
+                </div>
+            </div>
+            <script>
+                let appointments = [];
+                let editIndex = -1;
+
+                function openModal() {
+                    document.getElementById('myModal').style.display = 'block';
+                    document.getElementById('firstName').value = '';
+                    document.getElementById('lastName').value = '';
+                    document.getElementById('place').value = '';
+                    document.getElementById('dateAndTime').value = '';
+                    editIndex = -1;
+                }
+
+                function closeModal() {
+                    document.getElementById('myModal').style.display = 'none';
+                }
+
+                function addAppointment() {
+                    if (window.confirm('Are you sure to confrim?')) {
+                    const firstName = document.getElementById('firstName').value;
+                    const lastName = document.getElementById('lastName').value;
+                    const place = document.getElementById('place').value;
+                    const dateAndTime = document.getElementById('dateAndTime').value;
+
+                    if (editIndex === -1) {
+                        appointments.push({ firstName, lastName, place, dateAndTime });
+                    } else {
+                        appointments[editIndex] = { firstName, lastName, place, dateAndTime };
+                    }
+
+                    displayAppointments();
+                    closeModal();
+                }
+                }
+
+                function displayAppointments() {
+                    const appointmentsDiv = document.getElementById('appointments');
+                    // const placeDiv=document.getElementById('place1')
+                    appointmentsDiv.classList.add('appointments')
+                    appointmentsDiv.innerHTML = ``;
+                    // placeDiv.innerHTML=``;
+
+                    for (let i = 0; i < appointments.length; i++) {
+                        const appointment = appointments[i];
+
+                        const appointmentDiv = document.createElement('div');
+                        appointmentDiv.classList.add('first-name');
+                        appointmentDiv.textContent = appointment.firstName;
+                        appointmentsDiv.appendChild(appointmentDiv);
+
+                        const lastNameDiv = document.createElement('div');
+                        lastNameDiv.classList.add('last-name');
+                        lastNameDiv.textContent = appointment.lastName;
+                        appointmentDiv.appendChild(lastNameDiv);
+
+                        const placeDiv = document.createElement('div');
+                        placeDiv.classList.add('place');
+                        placeDiv.textContent = appointment.place;
+                        appointmentsDiv.appendChild(placeDiv);
+
+                        const dateAndTimeDiv = document.createElement('div');
+                        dateAndTimeDiv.classList.add('location');
+                        dateAndTimeDiv.textContent = appointment.dateAndTime;
+                        appointmentsDiv.appendChild(dateAndTimeDiv);
+
+                        const actionsDiv = document.createElement('div');
+                        actionsDiv.classList.add('frist-name');
+                        const editButton = document.createElement('button');
+                        editButton.classList.add('edit-button')
+                        editButton.textContent = 'Edit';
+                        editButton.onclick = function () {
+                            editAppointment(i);
+                        };
+                        const deleteButton = document.createElement('button');
+                        deleteButton.classList.add('delete-button')
+                        deleteButton.textContent = 'Delete';
+                        deleteButton.onclick = function () {
+                            // deleteAppointment(i);
+                            if (window.confirm('Are you sure you want to delete this appointment?')) {
+                deleteAppointment(i);
+            }
+                        };
+                        actionsDiv.appendChild(editButton);
+                        actionsDiv.appendChild(deleteButton);
+                        appointmentsDiv.appendChild(actionsDiv);
+                    }
+                }
+
+                function editAppointment(index) {
+                    openModal();
+                    editIndex = index;
+                    document.getElementById('firstName').value = appointments[index].firstName;
+                    document.getElementById('lastName').value = appointments[index].lastName;
+                    document.getElementById('place').value = appointments[index].place;
+                    document.getElementById('dateAndTime').value = appointments[index].dateAndTime;
+                }
+
+                function deleteAppointment(index) {
+                    appointments.splice(index, 1);
+                    displayAppointments();
+                }
+
+                displayAppointments();
+            </script>
+</body>
+
+</html>
